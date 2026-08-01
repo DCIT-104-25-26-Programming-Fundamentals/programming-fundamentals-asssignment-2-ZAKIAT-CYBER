@@ -63,5 +63,110 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+
 using namespace std;
 
+// Maximum allowed dimensions as per instructions
+const int MAX_SIZE = 10;
+
+// Helper function to read a matrix from user input
+void readMatrix(int matrix[MAX_SIZE][MAX_SIZE], int rows, int cols, string name) {
+    cout << "\nEnter elements for " << name << ": (" << rows << "x" << cols << ")\n";
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            cout << "Enter element [" << i << "][" << j << "]: ";
+            cin >> matrix[i][j];
+        }
+    }
+}
+
+void displayMatrix(const int matrix[MAX_SIZE][MAX_SIZE], int rows, int cols) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            cout << setw(6) << matrix[i][j];
+        }
+        cout << endl;
+    }
+}
+// PART A: Transpose a Matrix 
+void transposeMatrix(const int src[MAX_SIZE][MAX_SIZE], int dest[MAX_SIZE][MAX_SIZE], int rows, int cols) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            dest[j][i] = src[i][j];
+        }
+    }
+}
+
+// PART B: Add Two Matrices
+void addMatrices(const int A[MAX_SIZE][MAX_SIZE], const int B[MAX_SIZE][MAX_SIZE], int rows, int cols, int sum[MAX_SIZE][MAX_SIZE]) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            sum[i][j] = A[i][j] + B[i][j];
+        }
+    }
+}
+
+// PART C: Multiply Two Matrices
+void multiplyMatrices(const int A[MAX_SIZE][MAX_SIZE], const int B[MAX_SIZE][MAX_SIZE], int M, int N, int P, int product[MAX_SIZE][MAX_SIZE]) {
+    // Initialize product matrix to zero
+    for (int i = 0; i < M; i++) {
+        for (int j = 0; j < P; j++) {
+            product[i][j] = 0;
+            for (int k = 0; k < N; k++) {
+                product[i][j] += A[i][k] * B[k][j];
+            }
+        }
+    }
+}
+
+    int main() {
+        // Fixed allocation allocations as mandated
+        int matrixA[MAX_SIZE][MAX_SIZE];
+        int matrixB[MAX_SIZE][MAX_SIZE];   
+        int result[MAX_SIZE][MAX_SIZE]; 
+
+        int rowsA, colsA, rowsB, colsB;
+
+        cout << "===PART A: Transpose a Matrix===\n";
+        cout << "Enter number of rows: ";
+        cin >> rowsA;
+        cout << "Enter number of columns: ";
+        cin >> colsA;
+
+        readMatrix(matrixA, rowsA, colsA, "A");
+
+        cout << "\nOriginal Matrix:\n";
+        displayMatrix(matrixA, rowsA, colsA);
+
+        // For transpose, destination dimensions are inverted
+        transposeMatrix(matrixA, result, rowsA, colsA);
+        cout << "\nTransposed Matrix:\n";
+        displayMatrix(result, colsA, rowsA);
+
+        cout << "\n----------------------------\n";
+        cout << "===PART B: Add Two Matrices===\n";
+        cout << "Using the same dimensions (" << rowsA << "x" << colsA << ") for matrix B:\n";
+
+        readMatrix(matrixB, rowsA, colsA, "B");
+
+        addMatrices(matrixA, matrixB, rowsA, colsA, result);
+        cout << "\nResultant  Sum Matrix:\n";
+        displayMatrix(result, rowsA, colsA);
+
+        cout << "\n----------------------------\n";
+        cout << "===PART C: Multiply Two Matrices===\n";
+        cout << "Matrix A is currently " << rowsA << "x" << colsA << ".\n";
+        cout << "Matrix B must have " << colsA << "rows.\n";
+        rowsB = colsA; //Required for validity
+        cout << "Enter number of columns for Matrix B: ";
+        cin >> colsB;
+
+        readMatrix(matrixB, rowsB, colsB, "B (for multiplication)");
+
+        multiplyMatrices(matrixA, matrixB, rowsA, colsA, colsB, result);
+        cout << "\nResultant Product Matrix (" << rowsA << "x" << colsB << "):\n";
+        displayMatrix(result, rowsA, colsB);
+
+        return 0;
+    
+    }
