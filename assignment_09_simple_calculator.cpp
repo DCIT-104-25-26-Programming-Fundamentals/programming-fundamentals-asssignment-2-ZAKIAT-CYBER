@@ -73,3 +73,123 @@
 #include <cmath>
 using namespace std;
 
+// Function Prototypes
+double add(double a, double b);
+double subtract(double a, double b);
+double multiply(double a, double b);
+double divide(double a, double b);
+int calculateModulus(int a, int b);
+double exponentiate(double base, double exp);
+
+int main() {
+    int choice = 0;
+    double num1, num2;
+
+    while (choice != 7) {
+        cout << "\n====================================\n";
+        cout << "          SIMPLE CALCULATOR          \n";
+        cout << "====================================\n";
+        cout << "1. Addition\n";
+        cout << "2. Subtraction\n";
+        cout << "3. Multiplication\n";
+        cout << "4. Division\n";
+        cout << "5. Modulus\n";
+        cout << "6. Exponentiation\n";
+        cout << "7. Quit\n";
+        cout << "Select an operation (1-7): ";
+        
+        cin >> choice;
+
+        // Handle invalid, non-integer inputs gracefully
+        if (cin.fail()) {
+            cin.clear();
+            string dummy;
+            cin >> dummy;
+            cout << "Invalid choice! Please enter a number between 1 and 7.\n";
+            continue;
+        }
+
+        if (choice >= 1 && choice <= 6) {
+            cout << "Enter first number: ";
+            cin >> num1;
+            cout << "Enter second number: ";
+            cin >> num2;
+            
+            // Re-verify numeric input sanity
+            if (cin.fail()) {
+                cin.clear();
+                string dummy;
+                cin >> dummy;
+                cout << "Error: Invalid numeric input.\n";
+                continue;
+            }
+        }
+
+        // Set output configuration to 2 decimal spots for arithmetic operations
+        cout << fixed << setprecision(2);
+
+        switch (choice) {
+            case 1:
+                cout << "Result: " << num1 << " + " << num2 << " = " << add(num1, num2) << "\n";
+                break;
+            case 2:
+                cout << "Result: " << num1 << " - " << num2 << " = " << subtract(num1, num2) << "\n";
+                break;
+            case 3:
+                cout << "Result: " << num1 << " * " << num2 << " = " << multiply(num1, num2) << "\n";
+                break;
+            case 4:
+                if (num2 == 0) {
+                    cout << "Error: Cannot divide by zero.\n";
+                } else {
+                    cout << "Result: " << num1 << " / " << num2 << " = " << divide(num1, num2) << "\n";
+                }
+                break;
+            case 5:
+                // Modulus requires absolute whole integers
+                if (static_cast<int>(num2) == 0) {
+                    cout << "Error: Cannot divide by zero.\n";
+                } else {
+                    cout << "Result: " << static_cast<int>(num1) << " % " << static_cast<int>(num2) 
+                         << " = " << calculateModulus(static_cast<int>(num1), static_cast<int>(num2)) << "\n";
+                }
+                break;
+            case 6:
+                cout << "Result: " << num1 << " ^ " << num2 << " = " << exponentiate(num1, num2) << "\n";
+                break;
+            case 7:
+                cout << "Goodbye!\n";
+                break;
+            default:
+                cout << "Invalid choice! Please choose an option between 1 and 7.\n";
+                break;
+        }
+    }
+
+    return 0;
+}
+
+// Operational Functions
+double add(double a, double b) {
+    return a + b;
+}
+
+double subtract(double a, double b) {
+    return a - b;
+}
+
+double multiply(double a, double b) {
+    return a * b;
+}
+
+double divide(double a, double b) {
+    return a / b;
+}
+
+int calculateModulus(int a, int b) {
+    return a % b;
+}
+
+double exponentiate(double base, double exp) {
+    return pow(base, exp);
+}
