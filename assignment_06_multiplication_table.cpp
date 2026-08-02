@@ -57,3 +57,77 @@
 #include <iostream>
 using namespace std;
 
+// Function declarations (Prototypes)
+void printSingleTable(int number);
+void printMultipleTables(int limit);
+
+int main() {
+    int choice;
+    int number;
+
+    cout << "=== Multiplication Table Generator ===\n";
+    cout << "1. Part A: Single Table\n";
+    cout << "2. Part B: Bonus Tables from 1 to N\n";
+    cout << "Enter your choice (1 or 2): ";
+    cin >> choice;
+
+    if (choice == 1) {
+        // ==========================================
+        // PART A - Single Table
+        // ==========================================
+        cout << "\nEnter a number: ";
+        cin >> number;
+
+        // Requirement: N must be a positive integer
+        if (number <= 0) {
+            cout << "Error: The number must be a positive integer." << endl;
+            return 0; // Stop execution
+        }
+
+        printSingleTable(number);
+
+    } else if (choice == 2) {
+        // ==========================================
+        // PART B - Tables from 1 to N
+        // ==========================================
+        cout << "\nEnter a number N: ";
+        cin >> number;
+
+        // Requirement: N must be a positive integer
+        if (number <= 0) {
+            cout << "Error: The number must be a positive integer." << endl;
+            return 0; // Stop execution
+        }
+
+        printMultipleTables(number);
+
+    } else {
+        cout << "Invalid choice! Program stopping." << endl;
+    }
+
+    return 0;
+}
+
+// ==========================================
+// FUNCTION DEFINITIONS
+// ==========================================
+
+// PART A: Prints a single table for a given number from 1 to 12
+void printSingleTable(int num) {
+    cout << "\nMultiplication Table for " << num << ":\n";
+    for (int i = 1; i <= 12; i++) {
+        cout << num << " x " << i << " = " << (num * i) << endl;
+    }
+}
+
+// PART B: Prints all tables from 1 up to the specified limit N
+void printMultipleTables(int limit) {
+    for (int currentNum = 1; currentNum <= limit; currentNum++) {
+        printSingleTable(currentNum);
+        
+        // Add a separator line between tables, except after the final one
+        if (currentNum < limit) {
+            cout << "------------------------\n";
+        }
+    }
+}
